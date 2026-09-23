@@ -109,6 +109,34 @@ throughput.
    - `-o` + log redirect: read only the last-message file (and the files the
      spec asked for) into Opus's context, not the full transcript.
    - For web research add `-c web_search='"live"'`.
+9. **Review family follows risk, not every change.** For high-risk work
+   (auth/permissions, money, security, data-destroying migrations, deploy,
+   external access), the reviewer must come from the **other family** than
+   the executor: Claude wrote it → Sol reviews; GPT wrote it → Sonnet (or
+   Opus for the highest-stakes calls) reviews. For routine work, tests, CI
+   and a break-it verification scenario are the primary safeguard. An AI
+   review is optional there, isolated, and from any family, so the cheapest
+   suitable reviewer is fine. If a project defines its own risk tiers,
+   follow them.
+   - Every reviewer gets an isolated context: the task contract, the diff
+     and the test output, never the author's conversation or rationale.
+   - P0/P1 findings need evidence: a failing test, repro steps, or a
+     concrete `file:line` + input → wrong output. Otherwise they are
+     downgraded, which keeps false-positive churn down.
+   - If the other family is unavailable (quota), a same-family isolated
+     review may substitute on medium-risk work; note it in the review. On
+     high-risk work, wait or escalate to the human.
+   - **Basis (2026-09-23):** The most direct data is Greptile's "Model
+     Inversion" study (Jul 2026, 1,000 PRs). A cross-family reviewer had
+     higher recall on high-severity bugs in both directions: GPT on
+     Claude-authored PRs 60.0% vs Opus 53.7%, and Opus on Codex-authored PRs
+     62.0% vs GPT 50.5%. It is vendor data and not independently
+     replicated. Self-preference papers are older and text-focused. No study
+     compares a fresh-context same-model reviewer against a cross-family
+     one. Most review products (Anthropic, OpenAI, Cursor, CodeRabbit) use
+     their own models and rely on verification filtering instead. Since
+     most execution now runs on GPT, mandatory cross-family review on
+     routine work would spend scarce Claude quota for unproven gain.
 
 ## Choosing the delegate
 
@@ -117,8 +145,9 @@ throughput.
   including work over large inputs (API USD 0.10 / 0.50 per 1M tokens — by far
   the cheapest tier). See rule 5.
 - **Sonnet** (`sonnet-worker`) — Claude-side lane per rule 5's exceptions:
-  work needing Claude-side tools, second-opinion review of GPT output, and
-  orta fallback when GPT is failing. Quota-gated by the snapshot file.
+  work needing Claude-side tools, cross-family review of GPT output on
+  high-risk work (rule 9), optional second opinions, and orta fallback when
+  GPT is failing. Quota-gated by the snapshot file.
 - **Sol** (Codex CLI) — precision execution once a complete spec exists:
   hard implementation, migrations, test-writing against a defined contract.
 - **Astra** (Codex CLI) — hard reasoning only, per rule 6.
@@ -136,8 +165,10 @@ throughput.
    exceptions, after reading `~/.claude/rate-limit-status.json`.
 4. **zor / mimari-hassas** → Opus handles the judgment part directly (spec,
    architecture, synthesis) and delegates the mechanical portions: Sol for
-   precise execution, Luna for exploration, Sonnet for review (rule 5), Astra only if the core
-   difficulty is reasoning. Opus always owns final integration on this tier.
+   precise execution, Luna for exploration, Astra only if the core
+   difficulty is reasoning. The review follows rule 9: for high-risk work,
+   the reviewer comes from the other family. Opus always owns final
+   integration on this tier.
 
 ## Continuity under quota exhaustion
 

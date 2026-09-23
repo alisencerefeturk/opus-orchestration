@@ -17,6 +17,7 @@ Key ideas:
 
 - **Delegation is one level deep.** Only Opus dispatches work, so every call is auditable.
 - **Claude quota is read live.** `statusline.sh` writes it to `~/.claude/rate-limit-status.json` on every message, and Sonnet use is gated on it.
+- **Review family follows risk.** High-risk changes are reviewed by the other model family; routine work relies on tests and CI (rule 9, backed by Greptile's 2026 cross-family data).
 - **Routing follows data.** It is based on published benchmarks and a small Luna-vs-Sonnet head-to-head (see "Benchmark basis" and rule 5 in `SKILL.md`).
 
 The tier labels in the skill are Turkish: **basit** = simple, **orta** = medium, **zor** = hard.
