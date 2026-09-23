@@ -1,0 +1,27 @@
+# OS / editor
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Runtime state written by statusline.sh — personal quota data, never commit
+rate-limit-status.json
+*.tmp
+
+# Per-project orchestration checkpoints and dispatch logs
+.orchestration-checkpoint.md
+*.log
+*-last-message.txt
+
+# Install backups
+*.bak
+
+# Secrets, just in case
+.env
+.env.*
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.pyc
