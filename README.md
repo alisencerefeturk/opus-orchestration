@@ -34,7 +34,7 @@ install.sh                           symlinks everything into ~/.claude
 Requirements: Claude Code on a Pro or Max plan (Pro/Max accounts are the only ones that expose `rate_limits`), [Codex CLI](https://github.com/openai/codex) signed in with ChatGPT, and Python 3.
 
 ```bash
-git clone https://github.com/<you>/opus-orchestration.git
+git clone https://github.com/alisencerefeturk/opus-orchestration.git
 cd opus-orchestration
 ./install.sh
 ```
@@ -50,3 +50,7 @@ Then enable the status line in `~/.claude/settings.json`:
 ## Adapting it
 
 Model IDs, quota thresholds (60% / 70% / 85%), and benchmark numbers reflect one account as of September 2026. Check `codex` → `/model` for the IDs available to you, and tune the thresholds to your own usage.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
