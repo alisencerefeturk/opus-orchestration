@@ -114,7 +114,7 @@ throughput.
 
 - **Luna** (Codex CLI) — default lane for basit and orta work: bulk,
   research, codebase exploration, scoped implementation and bug fixing,
-  including work over large inputs (API $0.10 / $0.50 per 1M tokens — by far
+  including work over large inputs (API USD 0.10 / 0.50 per 1M tokens — by far
   the cheapest tier). See rule 5.
 - **Sonnet** (`sonnet-worker`) — Claude-side lane per rule 5's exceptions:
   work needing Claude-side tools, second-opinion review of GPT output, and

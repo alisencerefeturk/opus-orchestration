@@ -39,7 +39,7 @@ cd opus-orchestration
 ./install.sh
 ```
 
-`install.sh` symlinks the files into `~/.claude`, moving any existing files aside to `*.bak.<timestamp>` first. Because they are symlinks, edits from either side show up in `git diff`.
+`install.sh` symlinks the files into `~/.claude`, moving any existing files to `~/.claude/backups/opus-orchestration-<timestamp>/` first. Because they are symlinks, edits from either side show up in `git diff`.
 
 Then enable the status line in `~/.claude/settings.json`:
 

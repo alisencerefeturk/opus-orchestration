@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # Symlink this repo's skill, agent presets and statusline script into ~/.claude,
 # so edits made in either place are tracked by git. Existing files are moved
-# aside to <name>.bak.<timestamp> first.
+# to ~/.claude/backups/opus-orchestration-<timestamp>/ first — outside skills/
+# and agents/, so Claude Code doesn't load the backups as duplicates.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")" && pwd)"
 CLAUDE_DIR="${CLAUDE_DIR:-$HOME/.claude}"
 STAMP="$(date +%Y%m%d%H%M%S)"
+BACKUP_DIR="$CLAUDE_DIR/backups/opus-orchestration-$STAMP"
 
 link() {
   local src="$1" dst="$2"
@@ -16,8 +18,9 @@ link() {
     return
   fi
   if [ -e "$dst" ] || [ -L "$dst" ]; then
-    mv "$dst" "$dst.bak.$STAMP"
-    echo "backup   $dst -> $dst.bak.$STAMP"
+    mkdir -p "$BACKUP_DIR"
+    mv "$dst" "$BACKUP_DIR/$(basename "$dst")"
+    echo "backup   $dst -> $BACKUP_DIR/$(basename "$dst")"
   fi
   ln -s "$src" "$dst"
   echo "linked   $dst -> $src"
